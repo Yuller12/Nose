@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elecciones Escolares</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+      text-align: center;
+    }
+    header {
+      background-color: #FF6F61;
+      color: white;
+      padding: 20px 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .candidate {
+      margin: 20px 0;
+    }
+    .candidate img {
+      max-width: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #FF6F61;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #FF3D2E;
+    }
+    .results {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+    .dni-input {
+      margin-bottom: 20px;
+    }
+    input {
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Elecciones Escolares</h1>
+    <p>¡Vota por tu representante favorito!</p>
+  </header>
+
+  <div class="container">
+    <h2>Ingresa tu DNI para votar</h2>
+    <div class="dni-input">
+      <input type="text" id="dni" placeholder="Ingresa tu DNI">
+    </div>
+
+    <h3>Vota por:</h3>
+
+    <div class="candidate">
+      <img src="maria.jpg" alt="María Pérez">
+      <p>María Pérez</p>
+      <button onclick="vote('María Pérez')">Votar por María Pérez</button>
+    </div>
+    
+    <div class="candidate">
+      <img src="juan.jpg" alt="Juan López">
+      <p>Juan López</p>
+      <button onclick="vote('Juan López')">Votar por Juan López</button>
+    </div>
+
+    <div class="results" id="results">
+      <p id="voteMaria">María Pérez: 0 votos</p>
+      <p id="voteJuan">Juan López: 0 votos</p>
+    </div>
+  </div>
+
+  <script>
+    // Lista de DNIs válidos
+    const validDNIs = ["12345678", "87654321", "11223344", "55667788"];
+    let votes = { "María Pérez": 0, "Juan López": 0 };
+    let registeredDNIs = [];
+
+    function vote(candidate) {
+      const dniInput = document.getElementById("dni");
+      const dni = dniInput.value.trim();
+
+      // Verificar si el campo está vacío
+      if (dni === "") {
+        alert("Por favor, ingresa tu DNI.");
+        return;
+      }
+
+      // Verificar si el DNI es válido
+      if (!validDNIs.includes(dni)) {
+        alert("Este DNI no está autorizado para votar.");
+        return;
+      }
+
+      // Verificar si ya ha votado
+      if (registeredDNIs.includes(dni)) {
+        alert("Este DNI ya ha votado. No puedes votar más de una vez.");
+        return;
+      }
+
+      // Registrar el voto
+      votes[candidate]++;
+      registeredDNIs.push(dni);
+      document.getElementById('voteMaria').textContent = `María Pérez: ${votes["María Pérez"]} votos`;
+      document.getElementById('voteJuan').textContent = `Juan López: ${votes["Juan López"]} votos`;
+      alert(`¡Gracias por votar por ${candidate}!`);
+
+      // Limpiar el campo de DNI
+      dniInput.value = "";
+    }
+  </script>
+</body>
+</html>
